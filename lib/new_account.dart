@@ -29,7 +29,7 @@ class _newAccountState extends State<newAccount> {
     var notIn = ["Middle Name", "Alternative Phone Number"];
     var text = 'Please enter some text';
 
-    if(labelText=="Primary Email"){
+    if(labelText=="Primary Email" || labelText=="Nominee Email"){
       if(!validateEmail(value!)){
         return 'Please enter Correct Email';
       }else{
@@ -37,7 +37,7 @@ class _newAccountState extends State<newAccount> {
       }
     }
 
-    if(labelText=="Phone Number"){
+    if(labelText=="Phone Number" || labelText=="Nominee Phone Number"){
       if(!validatePhoneNumber(value!)){
         return 'Please enter Phone Number';
       }else{
@@ -119,8 +119,13 @@ class _newAccountState extends State<newAccount> {
               wig("Bank Account Number"),
               wig("Phone Number"),
               wig("Alternative Phone Number"),
+              wig("Nominee Name"),
+              wig("Nominee Phone Number"),
+              wig("Nominee Relation"),
+              wig("Nominee Email"),
+              wig("Nominee Address"),
               Padding(
-                  padding: const EdgeInsets.only(left: 60, right: 60,bottom: 10,top: 20),
+                  padding: EdgeInsets.only(left: 60, right: 60,bottom: 10,top: 20),
                   child: Container(
                     height: 50,
                     width: 250,
@@ -128,62 +133,134 @@ class _newAccountState extends State<newAccount> {
                       color: Colors.indigo.shade900, borderRadius: BorderRadius.circular(20)),
                       child: TextButton(
                         onPressed: () async {
-
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Dialog(
-                                backgroundColor: Colors.transparent,
-                                insetPadding: EdgeInsets.all(10),
-                                child: Stack(
-                                  clipBehavior: Clip.none, alignment: Alignment.center,
-                                  children: <Widget>[
-                                    Container(
-                                      width: double.infinity,
-                                      height: 200,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
-                                          color: Colors.white
-                                      ),
-                                      padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          const Text("For Account Creation,\nA Conformation Email Will be Sent !!",
-                                              style: TextStyle(fontSize: 20),
-                                              textAlign: TextAlign.center),
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context).popUntil((route) => route.isFirst);
-                                            },
-                                            child: Container(
-                                              color: Colors.blueAccent,
-                                              padding: const EdgeInsets.all(16),
-                                              //decoration: BoxDecoration(color: Colors.indigo.shade900, borderRadius: const BorderRadius.all(Radius.circular(32.0))),
-                                              child: const Text("Click Here!!",style: TextStyle(color: Colors.white)),
-                                            ),
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Dialog(
+                                  backgroundColor: Colors.transparent,
+                                  insetPadding: const EdgeInsets.all(10),
+                                  child: Stack(
+                                    clipBehavior: Clip.none,
+                                    alignment: Alignment.center,
+                                    children: <Widget>[
+                                      Container(
+                                          width: double.infinity,
+                                          height: 200,
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius
+                                                  .circular(15),
+                                              color: Colors.white
                                           ),
-                                        ],
+                                          padding: const EdgeInsets.fromLTRB(
+                                              20, 50, 20, 20),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              const Text(
+                                                  "For Account Creation,\nA Conformation Email Will be Sent !!",
+                                                  style: TextStyle(
+                                                      fontSize: 20),
+                                                  textAlign: TextAlign.center),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context)
+                                                      .popUntil((route) =>
+                                                  route.isFirst);
+                                                },
+                                                child: Container(
+                                                  padding: const EdgeInsets.all(16),
+                                                  decoration: BoxDecoration(color: Colors.indigo.shade900, borderRadius: const BorderRadius.all(Radius.circular(32.0))),
+                                                  child: const Text(
+                                                      "Click Here!!",
+                                                      style: TextStyle(color: Colors.white)),
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                      ),
+
+                                      Positioned(
+                                          top: -100,
+                                          child: Image.asset(
+                                              "assets/images/thanks.gif",
+                                              width: 150, height: 150)
                                       )
-                                    ),
-
-                                    Positioned(
-                                        top: -100,
-                                        child: Image.asset("assets/images/thanks.gif", width: 150, height: 150)
-                                    )
-                                  ],
-                                ),
-                              );
-                            },
-                          );
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
 
 
-                          http.Response response = await http.post(
-                            //http://jsonplaceholder.typicode.com/posts
-                            Uri.parse('http://192.168.0.123:5000/api'),
-                            headers: {"Content-Type": "application/json"},
-                            body: json.encode(data),
-                          );
+                            http.Response response = await http.post(
+                              //http://jsonplaceholder.typicode.com/posts
+                              Uri.parse('http://192.168.0.123:5000/api'),
+                              headers: {"Content-Type": "application/json"},
+                              body: json.encode(data),
+                            );
+                          }else{
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Dialog(
+                                  backgroundColor: Colors.transparent,
+                                  insetPadding: const EdgeInsets.all(10),
+                                  child: Stack(
+                                    clipBehavior: Clip.none,
+                                    alignment: Alignment.center,
+                                    children: <Widget>[
+                                      Container(
+                                          width: double.infinity,
+                                          height: 200,
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius
+                                                  .circular(15),
+                                              color: Colors.white
+                                          ),
+                                          padding: const EdgeInsets.fromLTRB(
+                                              20, 50, 20, 20),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment
+                                                .center,
+                                            children: [
+                                              const Text(
+                                                  "Please Can You Fill All Required Fields",
+                                                  style: TextStyle(
+                                                      fontSize: 20),
+                                                  textAlign: TextAlign.center),
+                                              TextButton(
+                                                onPressed: () { Navigator.pop(context); },
+                                                child: Container(
+                                                  padding: const EdgeInsets.all(16),
+                                                  decoration: BoxDecoration(color: Colors.indigo.shade900, borderRadius: const BorderRadius.all(Radius.circular(32.0))),
+                                                  child: const Text(
+                                                      "Click Here!!",
+                                                      style: TextStyle(color: Colors.white)
+                                                  ),
+                                                ),
+                                                )
+                                            ],
+                                          )
+                                      ),
+
+                                      Positioned(
+                                          top: -100,
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(15.0),
+                                            child: Image.asset(
+                                                "assets/images/please.gif",
+                                                width: 150, height: 150)
+                                          )
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          }
+
                         },
                         child: const Text('Submit',style: TextStyle(color: Colors.white, fontSize: 25)),
                       )

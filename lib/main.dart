@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home_screen.dart';
 import 'myProfile.dart';
 
 void main() {
@@ -8,6 +9,7 @@ void main() {
         home: const MyApp(),
         routes: {
           '/logIn':(context) => const logIn(),
+          '/HomePage':(context) => const HomePage(),
         },
       )
   );
@@ -49,7 +51,7 @@ class MyNavigationBar extends StatefulWidget {
 class _MyNavigationBarState extends State<MyNavigationBar > {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
-    Text('Home', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+    HomePage(),
     logIn(),
     Text('myHealth', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
     Text('myOrders', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),

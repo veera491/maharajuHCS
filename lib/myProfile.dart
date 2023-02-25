@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:maharaju/userProfile.dart';
 
 import 'new_account.dart';
 
@@ -136,30 +137,18 @@ class _logInState extends State<logIn> {
                       );
                     }else{
 
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: (_) => Scaffold(
-                            appBar: AppBar(
-                              title: Image.asset('assets/images/logo.png',height: 50,width: 300,
-                              alignment: Alignment.centerLeft),
-                          backgroundColor: Colors.indigo.shade900,
-                        ),
-                            body: Center(
-                              child: Text('You Are LoggedIn !! with $username and $password',
-                                style: const TextStyle(
-                                color: Colors.indigo,fontSize: 24
-                            ),
-                          ),
-                        ),)));
-
                       http.Response response = await http.post(
                         //http://jsonplaceholder.typicode.com/posts
-                        Uri.parse('http://192.168.0.123:5000/api'),
+                        Uri.parse('http://192.168.0.123:5000/login'),
                         headers: {"Content-Type": "application/json"},
                         body: json.encode({
                           "username":username,
                           "password":password
                         }),
                       );
+                      print(json.decode(response.body));
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (_) => user(user_details: json.decode(response.body))));
                     }
                   },
                   child: const Text(
