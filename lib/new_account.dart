@@ -27,7 +27,7 @@ class _newAccountState extends State<newAccount> {
 
   String? _validateTextField(String? value, String labelText) {
     var notIn = ["Middle Name", "Alternative Phone Number"];
-    var text = 'Please enter some text';
+    var text = 'Please enter Valid Info';
 
     if(labelText=="Primary Email" || labelText=="Nominee Email"){
       if(!validateEmail(value!)){
@@ -156,6 +156,7 @@ class _newAccountState extends State<newAccount> {
                                           padding: const EdgeInsets.fromLTRB(
                                               20, 50, 20, 20),
                                           child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
                                               const Text(
@@ -222,11 +223,10 @@ class _newAccountState extends State<newAccount> {
                                           padding: const EdgeInsets.fromLTRB(
                                               20, 50, 20, 20),
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment
-                                                .center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
                                               const Text(
-                                                  "Please Can You Fill All Required Fields",
+                                                  "All are Mandatory Fields",
                                                   style: TextStyle(
                                                       fontSize: 20),
                                                   textAlign: TextAlign.center),

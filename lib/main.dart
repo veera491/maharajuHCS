@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'myProfile.dart';
-
+import 'splash_screen.dart';
+import 'blog_deailer.dart';
 void main() {
   runApp(
       MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: const MyApp(),
+        home: SplashScreen(), /* const MyApp(), */
         routes: {
+          //' /begin':(context) => const MyApp(),
           '/logIn':(context) => const logIn(),
           '/HomePage':(context) => const HomePage(),
         },

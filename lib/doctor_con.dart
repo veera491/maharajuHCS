@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maharaju/under.dart';
-
+import 'blog_detailer.dart';
 import 'doctor_slot.dart';
 
 class doc extends StatefulWidget {
@@ -41,10 +41,22 @@ class _docState extends State<doc> {
 
           GestureDetector(
             onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder:(context) => const docSlot() )
+              // Navigator.of(context).push(
+              //     MaterialPageRoute(
+              //         builder:(context) => const docSlot() )
+              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DoctorProfilePage(
+                    name: 'Dr. Madhu Sudhan Reddy',
+                    photoUrl: 'assets/images/madhu.jpg',
+                    speciality: 'Cardiologist',
+                    bio:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula rhoncus odio, id ultricies velit tincidunt vel. Cras nec felis finibus, consequat leo at, dapibus sem. Duis sit amet augue magna. Praesent in magna ac enim faucibus efficitur. Integer vulputate est vel mi imperdiet euismod. Sed sollicitudin sapien sit amet felis dapibus, ac pellentesque ipsum hendrerit. In viverra euismod metus, eget maximus lorem dictum vitae.'
+                ),
+                ),
               );
+
             },
             child: Card(
               color: Colors.indigo.shade300,
@@ -87,9 +99,20 @@ class _docState extends State<doc> {
 
           GestureDetector(
             onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder:(context) => const under() )
+              // Navigator.of(context).push(
+              //     MaterialPageRoute(
+              //         builder:(context) => const under() )
+              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DoctorProfilePage(
+                    name: 'Dr. Madhu Sudhan Reddy',
+                    photoUrl: 'assets/images/madhu.jpg',
+                    speciality: 'Nuerology',
+                    bio:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula rhoncus odio, id ultricies velit tincidunt vel. Cras nec felis finibus, consequat leo at, dapibus sem. Duis sit amet augue magna. Praesent in magna ac enim faucibus efficitur. Integer vulputate est vel mi imperdiet euismod. Sed sollicitudin sapien sit amet felis dapibus, ac pellentesque ipsum hendrerit. In viverra euismod metus, eget maximus lorem dictum vitae.'
+                ),
+                ),
               );
             },
             child: Card(
@@ -109,14 +132,14 @@ class _docState extends State<doc> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
                           Center(
-                            child: Text('Dr.Rao',style: TextStyle(
+                            child: Text('Dr. Madhu',style: TextStyle(
                               fontSize: 24,
                               color: Colors.black,
                             ),),
                           ),
 
                           Center(
-                              child: Text('Mbbs,M.S. - neurology',style: TextStyle(
+                              child: Text('MBBS,M.S. - Neurology',style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.black54,
                               ),)
@@ -133,9 +156,20 @@ class _docState extends State<doc> {
 
           GestureDetector(
             onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder:(context) => const under() )
+            //   Navigator.of(context).push(
+            //       MaterialPageRoute(
+            //           builder:(context) => const under() )
+            //   );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DoctorProfilePage(
+                  name: 'Dr. Madhu Sudhan Reddy',
+                  photoUrl: 'assets/images/madhu.jpg',
+                  speciality: 'ENT Expert',
+                  bio:
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula rhoncus odio, id ultricies velit tincidunt vel. Cras nec felis finibus, consequat leo at, dapibus sem. Duis sit amet augue magna. Praesent in magna ac enim faucibus efficitur. Integer vulputate est vel mi imperdiet euismod. Sed sollicitudin sapien sit amet felis dapibus, ac pellentesque ipsum hendrerit. In viverra euismod metus, eget maximus lorem dictum vitae.'
+                ),
+                ),
               );
             },
             child: Card(
@@ -162,7 +196,7 @@ class _docState extends State<doc> {
                           ),
 
                           Center(
-                              child: Text('Mbbs,M.S. - ENT',style: TextStyle(
+                              child: Text('MBBS,M.S. - ENT',style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.black54,
                               ),)
