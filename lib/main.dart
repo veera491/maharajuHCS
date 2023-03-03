@@ -9,7 +9,7 @@ void main() {
   runApp(
       MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: MyClass(), /* const MyApp(), */
+        home: SplashScreen(), /* const MyApp(), */
         routes: {
           //' /begin':(context) => const MyApp(),
           '/logIn':(context) => const logIn(),
