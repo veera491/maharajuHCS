@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:maharaju/under.dart';
+import 'package:http/http.dart' as http;
+import 'package:geolocator/geolocator.dart';
 import 'blog_detailer.dart';
 import 'doctor_slot.dart';
 
@@ -13,6 +17,7 @@ class doc extends StatefulWidget {
 class _docState extends State<doc> {
   @override
   Widget build(BuildContext context) {
+    var c = loc();
     return Scaffold(
       appBar: AppBar(title: Image.asset('assets/images/logo.png',height: 50,width: 300,
         alignment: Alignment.centerLeft), backgroundColor: Colors.indigo.shade900),
@@ -216,4 +221,19 @@ class _docState extends State<doc> {
     ) ,
     );
   }
+}
+
+loc() async {
+  //var permission = await Geolocator.requestPermission();
+  var position = await Geolocator.getCurrentPosition();
+  http.Response response = await http.post(
+    //http://jsonplaceholder.typicode.com/posts
+    Uri.parse('http://jsonplaceholder.typicode.com/posts'),
+    headers: {"Content-Type": "application/json"},
+    body: json.encode({
+      "latitude":position.latitude,
+      "longitude":position.longitude
+    }),
+  );
+  print(json.decode(response.body));
 }

@@ -51,9 +51,8 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> with SingleTicker
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Doctor Profile'),
-      ),
+      appBar: AppBar(title: Image.asset('assets/images/logo.png',height: 50,width: 300,
+          alignment: Alignment.centerLeft), backgroundColor: Colors.indigo.shade900),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -62,7 +61,7 @@ class _DoctorProfilePageState extends State<DoctorProfilePage> with SingleTicker
             FadeTransition(
               opacity: _animation,
               child: CircleAvatar(
-                backgroundImage: NetworkImage(widget.photoUrl),
+                backgroundImage: AssetImage(widget.photoUrl),
                 radius: 75.0,
               ),
             ),
