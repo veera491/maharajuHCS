@@ -40,6 +40,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   card_slider: ^1.0.5
   geolocator: ^7.0.3
+  shared_preferences: ^2.0.6
 
 dev_dependencies:
   flutter_test:
