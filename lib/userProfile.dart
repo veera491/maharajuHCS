@@ -33,6 +33,7 @@ Widget col(String name, String value, double screenWidth){
 }
 
 Widget userdet(Map<String, dynamic> user_details, double screenWidth){
+  print(user_details);
   return SingleChildScrollView(
     child: Column(
       children: [

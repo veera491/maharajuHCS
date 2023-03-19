@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:maharaju/under.dart';
 import 'carder.dart';
+import 'package:http/http.dart' as http;
 import 'doctor_con.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,6 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    var c = loc();
     return Scaffold(
         resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
@@ -64,4 +69,19 @@ class _HomePageState extends State<HomePage> {
       )
     );
   }
+}
+
+loc() async {
+  var permission = await Geolocator.requestPermission();
+  var position = await Geolocator.getCurrentPosition();
+  http.Response response = await http.post(
+    //http://jsonplaceholder.typicode.com/posts
+    Uri.parse('http://jsonplaceholder.typicode.com/posts'),
+    headers: {"Content-Type": "application/json"},
+    body: json.encode({
+      "latitude":position.latitude,
+      "longitude":position.longitude
+    }),
+  );
+  print(json.decode(response.body));
 }

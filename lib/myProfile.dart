@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:maharaju/userProfile.dart';
@@ -139,14 +140,19 @@ class _logInState extends State<logIn> {
 
                       http.Response response = await http.post(
                         //http://jsonplaceholder.typicode.com/posts
-                        Uri.parse('http://192.168.0.123:5000/login'),
+                        Uri.parse('http://192.168.0.115:5000/login'),
                         headers: {"Content-Type": "application/json"},
                         body: json.encode({
                           "username":username,
                           "password":password
                         }),
                       );
-                      print(json.decode(response.body));
+                      File file = File('login.json');
+                      String contents = file.readAsStringSync();
+                      Map<String, dynamic> data = jsonDecode(contents);
+                      data['username'] = username;
+                      String updatedContents = jsonEncode(data);
+                      file.writeAsStringSync(updatedContents);
                       Navigator.push(
                           context, MaterialPageRoute(builder: (_) => user(user_details: json.decode(response.body))));
                     }
