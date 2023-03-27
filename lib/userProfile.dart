@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Widget col(String name, String value, double screenWidth){
   return Container(
@@ -9,7 +11,7 @@ Widget col(String name, String value, double screenWidth){
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
         ),
-        color: Colors.indigo.shade300,
+        color: Colors.indigo.shade200,
         elevation: 10,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -32,11 +34,17 @@ Widget col(String name, String value, double screenWidth){
   );
 }
 
-Widget userdet(Map<String, dynamic> user_details, double screenWidth){
-  print(user_details);
+Future<Widget> userdet(double screenWidth) async {
+  final prefs = await SharedPreferences.getInstance();
+  var user_details = jsonDecode(prefs.getString('user_details') ?? '{}');
   return SingleChildScrollView(
     child: Column(
       children: [
+        Text("\nMy Profile\n",style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            color: Colors.indigo.shade900
+        ),),
         col("First Name",user_details["First Name"].toString(),screenWidth),
         col("Middle Name",user_details["Middle Name"].toString(),screenWidth),
         col("Last Name",user_details["Last Name"].toString(),screenWidth),
@@ -65,28 +73,29 @@ Widget userdet(Map<String, dynamic> user_details, double screenWidth){
   );
 }
 
+
 class user extends StatefulWidget {
-  final Map<String, dynamic> user_details;
-  const user({Key? key, required this.user_details}) : super(key: key);
+  const user({Key? key}) : super(key: key);
 
   @override
-  State<user> createState() => _userState(user_details);
+  State<user> createState() => _userState();
 }
 
 class _userState extends State<user> {
-
-  final Map<String, dynamic> user_details;
-  _userState(this.user_details);
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        title: Image.asset('assets/images/logo.png',height: 50,width: 300,
-            alignment: Alignment.centerLeft),
-        backgroundColor: Colors.indigo.shade900,
+      body: FutureBuilder<Widget>(
+        future: userdet(screenWidth),
+        builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return snapshot.data ?? Container(); // Return the data if available, or an empty Container otherwise
+          } else {
+            return Center(child: CircularProgressIndicator()); // Show a loading spinner while waiting for the data
+          }
+        },
       ),
-      body: userdet(user_details,screenWidth)
-      );
+    );
   }
 }

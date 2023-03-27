@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:maharaju/under.dart';
 import 'package:http/http.dart' as http;
 
+import 'doc_details.dart';
+
 
 //List<Widget> lst = [];
 
@@ -61,14 +63,13 @@ Future<List<Widget>> doclist(context) async {
   var permission = await Geolocator.requestPermission();
   var position = await Geolocator.getCurrentPosition();
   http.Response response = await http.post(
-    //http://jsonplaceholder.typicode.com/posts
-    Uri.parse('http://192.168.0.115:5000/doc'),
-    headers: {"Content-Type": "application/json"},
-    body: json.encode({
-      "latitude":position.latitude,
-      "longitude":position.longitude
-    }),
-  );
+    Uri.parse('http://ec2-54-206-33-26.ap-southeast-2.compute.amazonaws.com/nearbyitems'),
+    body: {
+      "lat": position.latitude.toString(),
+      "long": position.longitude.toString(),
+      "range":'5',
+      "role_name":"doctor"
+    });
   var data = json.decode(response.body);
   List<Widget> lst1 = [
     const Text("\nLet's Consult A Doctor",style: TextStyle(
@@ -89,38 +90,39 @@ Future<List<Widget>> doclist(context) async {
       color: Colors.black,
     ),),
   ];
-  for(var i in data){
+  for(var j in data){
+    var i = j["doctor_details"];
     lst1.add(
       GestureDetector(
         onTap: () {
           Navigator.of(context).push(
               MaterialPageRoute(
-                  builder:(context) => const under() ));
+                  builder:(context) => doc_details(docData: j) ));
         },
         child: Card(
-          color: Colors.indigo.shade300,
+          elevation: 5.0,
+          color: Colors.indigo.shade200,
           child: Container(
               width: 300,
               height: 100,
               padding: const EdgeInsets.all(16),
-              child: Expanded(
-                child: Row(
+              child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.network(i['Photo'],width: 100,height: 100,),
+                    Image.network(i["doctor_picture"],width: 100,height: 100),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Center(
-                          child: Text(i['Name'],style: const TextStyle(
+                          child: Text("Dr."+i['doctor_first_name'],style: const TextStyle(
                             fontSize: 24,
                             color: Colors.black,
                           ),),
                         ),
 
                         Center(
-                            child: Text(i['Title'],style: const TextStyle(
+                            child: Text(i['doctor_specialization'],style: const TextStyle(
                               fontSize: 14,
                               color: Colors.black54,
                             ),)
@@ -132,7 +134,6 @@ Future<List<Widget>> doclist(context) async {
               )
           ),
         ),
-      ),
     );
   }
   return lst1;

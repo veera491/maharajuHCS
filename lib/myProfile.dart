@@ -3,9 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:maharaju/userProfile.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'new_account.dart';
-
 
 class logIn extends StatefulWidget {
   const logIn({Key? key}) : super(key: key);
@@ -90,7 +89,7 @@ class _logInState extends State<logIn> {
 
                   http.Response response = await http.post(
                     //http://jsonplaceholder.typicode.com/posts
-                    Uri.parse('http://192.168.0.123:5000/api'),
+                    Uri.parse('http://127.0.0.1:5000/api'),
                     headers: {"Content-Type": "application/json"},
                     body: json.encode({
                       "Message": "User Wants a new mail"
@@ -140,21 +139,16 @@ class _logInState extends State<logIn> {
 
                       http.Response response = await http.post(
                         //http://jsonplaceholder.typicode.com/posts
-                        Uri.parse('http://192.168.0.115:5000/login'),
-                        headers: {"Content-Type": "application/json"},
-                        body: json.encode({
-                          "username":username,
-                          "password":password
-                        }),
+                        Uri.parse('http://ec2-54-206-33-26.ap-southeast-2.compute.amazonaws.com/userlogin'),
+                        //headers: {"Content-Type": "application/json"},
+                        body: {
+                          "UserName":username,
+                          "PassWord":password
+                        },
                       );
-                      File file = File('login.json');
-                      String contents = file.readAsStringSync();
-                      Map<String, dynamic> data = jsonDecode(contents);
-                      data['username'] = username;
-                      String updatedContents = jsonEncode(data);
-                      file.writeAsStringSync(updatedContents);
+
                       Navigator.push(
-                          context, MaterialPageRoute(builder: (_) => user(user_details: json.decode(response.body))));
+                          context, MaterialPageRoute(builder: (_) => user()));
                     }
                   },
                   child: const Text(

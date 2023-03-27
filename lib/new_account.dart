@@ -197,7 +197,7 @@ class _newAccountState extends State<newAccount> {
 
                             http.Response response = await http.post(
                               //http://jsonplaceholder.typicode.com/posts
-                              Uri.parse('http://192.168.0.123:5000/api'),
+                              Uri.parse('http://127.0.0.1:5000/api'),
                               headers: {"Content-Type": "application/json"},
                               body: json.encode(data),
                             );
